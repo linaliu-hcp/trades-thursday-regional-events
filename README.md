@@ -12,7 +12,9 @@ contact info, no payout data, no attendance/anomaly data.
 
 ## How it works
 
-- `.github/workflows/update.yml` runs `scripts/build.mjs` every 30 minutes
+- `.github/workflows/update.yml` runs `scripts/build.mjs` every 5 minutes
+  (GitHub's actual cron trigger time can slip a few minutes under load —
+  not a hard real-time guarantee, just close to it)
   (and on every push to `main`), regenerating `docs/index.html` from
   Goldcast's live event list, then commits the result if it changed.
 - GitHub Pages serves `docs/index.html` from `main` — a fully static page,

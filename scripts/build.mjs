@@ -114,13 +114,17 @@ function escapeHtml(s) {
   })[c]);
 }
 
+// Matches EventsTable.tsx's STATUS_CLASS/STATUS_LABEL exactly (Regional
+// only ever reaches Coming up/Started/Closed — no "Closing", that state is
+// defined by check-in closure + payout settlement, neither of which
+// exists on Regional).
 function computeStatus(startIso, endIso) {
   const now = Date.now();
   const start = new Date(startIso).getTime();
   const end = new Date(endIso).getTime();
-  if (now < start) return { label: "Coming up", cls: "status-upcoming" };
-  if (now > end) return { label: "Closed", cls: "status-closed" };
-  return { label: "Started", cls: "status-started" };
+  if (now < start) return { label: "Coming up", cls: "st-upcoming" };
+  if (now > end) return { label: "Closed", cls: "st-ended" };
+  return { label: "Started", cls: "st-live" };
 }
 
 function formatTime(startIso, tzRaw) {
@@ -180,13 +184,20 @@ async function main() {
           <div class="ev-sub">${escapeHtml(r.when)}</div>
           <div class="ev-host">${escapeHtml(r.hostName)}</div>
         </td>
-        <td><span class="status-pill ${r.status.cls}">${escapeHtml(r.status.label)}</span></td>
+        <td>
+          <span class="status ${r.status.cls}"><i></i>${escapeHtml(r.status.label)}</span>
+        </td>
         <td>${escapeHtml(r.venueType || "—")}</td>
-        <td class="num">${escapeHtml(r.registered)}</td>
+        <td class="mono-cell">${escapeHtml(r.registered)}</td>
+        <td class="mono-cell">—</td>
+        <td class="mono-cell">— / —</td>
       </tr>`).join("\n");
 
   const updatedAt = new Date().toISOString();
 
+  // Colors/typography match app/globals.css exactly (--bg/--surface/--ink/
+  // --good/--warn/--critical/--info/--brand-navy) so this reads as the
+  // same product as the internal dashboard, not a separate-looking page.
   const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -195,39 +206,49 @@ async function main() {
 <title>Trades Thursday — Regional Events</title>
 <style>
   :root {
-    --paper: #f6f4ef; --ink: #1d1c19; --ink-soft: #55524a; --ink-faint: #8a8578;
-    --line: #e2ddd1; --accent: #1f6f63; --surface: #ffffff;
-    --pending: #92400e; --pending-soft: #fef3c7;
+    --bg: #f8f9fb; --surface: #ffffff; --surface-2: #f3f4f6;
+    --ink: #111827; --ink-soft: #4b5563; --ink-faint: #6b7280;
+    --line: #e5e7eb; --line-strong: #d1d5db;
+    --brand-navy: #003a6d;
     --good: #166534; --good-soft: #dcfce7;
-    --neutral: #374151; --neutral-soft: #e5e7eb;
+    --warn: #92400e; --warn-soft: #fef3c7;
+    --critical: #991b1b; --critical-soft: #fee2e2;
+    --info: #1e40af; --info-soft: #dbeafe;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --paper: #17181b; --ink: #edeae2; --ink-soft: #b7b2a4; --ink-faint: #7c786d;
-      --line: #33342f; --accent: #5fb3a3; --surface: #1f2124;
-      --pending: #fbbf24; --pending-soft: #3a2c10;
+      --bg: #0f1115; --surface: #17191f; --surface-2: #1d2028;
+      --ink: #f3f4f6; --ink-soft: #a3a8b3; --ink-faint: #6b7280;
+      --line: #2a2d36; --line-strong: #383c47;
+      --brand-navy: #6fa8dc;
       --good: #4ade80; --good-soft: #16321f;
-      --neutral: #d1d5db; --neutral-soft: #2a2c30;
+      --warn: #fbbf24; --warn-soft: #3a2c10;
+      --critical: #f87171; --critical-soft: #3a1a1a;
+      --info: #60a5fa; --info-soft: #1c2c4d;
     }
   }
   * { box-sizing: border-box; }
-  body { background: var(--paper); color: var(--ink); font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 2.5rem 1.25rem 4rem; }
-  .wrap { max-width: 900px; margin: 0 auto; }
-  h1 { font-size: 1.5rem; margin: 0 0 0.5rem; }
+  body { background: var(--bg); color: var(--ink); font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 2.5rem 1.25rem 4rem; }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 0.5rem; color: var(--brand-navy); }
   p.lede { color: var(--ink-soft); margin: 0 0 2rem; }
-  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
-  table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 560px; }
-  thead th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); padding: 0.65rem 1rem; border-bottom: 1px solid var(--line); }
-  tbody td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 0.92rem; }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 760px; }
+  thead th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); padding: 0.65rem 1rem; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+  tbody td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 0.875rem; }
   tbody tr:last-child td { border-bottom: none; }
   .ev-name { font-weight: 700; }
-  .ev-sub { color: var(--ink-soft); font-size: 0.85rem; margin-top: 2px; }
-  .ev-host { color: var(--ink-faint); font-size: 0.85rem; margin-top: 4px; }
-  .num { font-variant-numeric: tabular-nums; }
-  .status-pill { display: inline-flex; padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
-  .status-upcoming { background: var(--pending-soft); color: var(--pending); }
-  .status-started { background: var(--good-soft); color: var(--good); }
-  .status-closed { background: var(--neutral-soft); color: var(--neutral); }
+  .ev-sub { color: var(--ink-soft); font-size: 0.8125rem; margin-top: 2px; }
+  .ev-host { color: var(--ink-faint); font-size: 0.8125rem; margin-top: 4px; }
+  .mono-cell { font-variant-numeric: tabular-nums; color: var(--ink); }
+  .status { display: inline-flex; align-items: flex-start; gap: 6px; font-weight: 600; font-size: 0.8125rem; }
+  .status i { margin-top: 5px; width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .status.st-live { color: var(--good); }
+  .status.st-live i { background: var(--good); }
+  .status.st-ended { color: var(--critical); }
+  .status.st-ended i { background: var(--critical); }
+  .status.st-upcoming { color: var(--info); }
+  .status.st-upcoming i { background: var(--info); }
   footer { margin-top: 1.5rem; color: var(--ink-faint); font-size: 0.8rem; }
 </style>
 </head>
@@ -238,10 +259,10 @@ async function main() {
     <div class="table-scroll">
       <table>
         <thead>
-          <tr><th>Event</th><th>Status</th><th>Venue Type</th><th>Registered</th></tr>
+          <tr><th>Event</th><th>Status</th><th>Venue Type</th><th>Registered</th><th>Verified</th><th>HCP / Non-HCP</th></tr>
         </thead>
         <tbody>
-          ${tableRows || '<tr><td colspan="4">No upcoming Regional events right now — check back soon.</td></tr>'}
+          ${tableRows || '<tr><td colspan="6">No upcoming Regional events right now — check back soon.</td></tr>'}
         </tbody>
       </table>
     </div>

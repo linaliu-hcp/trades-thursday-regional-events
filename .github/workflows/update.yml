@@ -23,6 +23,7 @@ jobs:
       - name: Build regional events page
         env:
           GOLDCAST_API_TOKEN: ${{ secrets.GOLDCAST_API_TOKEN }}
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
         run: node scripts/build.mjs
 
       - name: Commit and push if changed

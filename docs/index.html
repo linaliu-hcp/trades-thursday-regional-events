@@ -5,22 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trades Thursday — Regional Events</title>
 <style>
+
   :root {
     --bg: #f8f9fb; --surface: #ffffff; --surface-2: #f3f4f6;
     --ink: #111827; --ink-soft: #4b5563; --ink-faint: #6b7280;
     --line: #e5e7eb; --line-strong: #d1d5db;
-    --brand-navy: #003a6d;
+    --brand-navy: #003a6d; --accent: #003a6d; --accent-soft: #e3e8ef;
     --good: #166534; --good-soft: #dcfce7;
     --warn: #92400e; --warn-soft: #fef3c7;
     --critical: #991b1b; --critical-soft: #fee2e2;
     --info: #1e40af; --info-soft: #dbeafe;
+    --shadow: 0 1px 2px rgba(17, 24, 39, 0.06), 0 1px 0 rgba(17, 24, 39, 0.03);
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #0f1115; --surface: #17191f; --surface-2: #1d2028;
       --ink: #f3f4f6; --ink-soft: #a3a8b3; --ink-faint: #6b7280;
       --line: #2a2d36; --line-strong: #383c47;
-      --brand-navy: #6fa8dc;
+      --brand-navy: #6fa8dc; --accent: #6fa8dc; --accent-soft: #1c2740;
       --good: #4ade80; --good-soft: #16321f;
       --warn: #fbbf24; --warn-soft: #3a2c10;
       --critical: #f87171; --critical-soft: #3a1a1a;
@@ -29,11 +31,12 @@
   }
   * { box-sizing: border-box; }
   body { background: var(--bg); color: var(--ink); font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 2.5rem 1.25rem 4rem; }
+
   .wrap { max-width: 1080px; margin: 0 auto; }
   h1 { font-size: 1.5rem; margin: 0 0 0.5rem; color: var(--brand-navy); }
   p.lede { color: var(--ink-soft); margin: 0 0 2rem; }
   .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
-  table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 760px; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 820px; }
   thead th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); padding: 0.65rem 1rem; border-bottom: 1px solid var(--line); background: var(--surface-2); }
   tbody td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 0.875rem; }
   tbody tr:last-child td { border-bottom: none; }
@@ -49,6 +52,8 @@
   .status.st-ended i { background: var(--critical); }
   .status.st-upcoming { color: var(--info); }
   .status.st-upcoming i { background: var(--info); }
+  .analytics-btn { display: inline-block; white-space: nowrap; font-size: 0.8125rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+  .analytics-btn:hover { text-decoration: underline; }
   footer { margin-top: 1.5rem; color: var(--ink-faint); font-size: 0.8rem; }
 </style>
 </head>
@@ -59,7 +64,7 @@
     <div class="table-scroll">
       <table>
         <thead>
-          <tr><th>Event</th><th>Status</th><th>Venue Type</th><th>Registered</th><th>Verified</th><th>HCP / Non-HCP</th></tr>
+          <tr><th>Event</th><th>Status</th><th>Venue Type</th><th>Registered</th><th>Verified</th><th>HCP / Non-HCP</th><th></th></tr>
         </thead>
         <tbody>
           
@@ -76,6 +81,7 @@
         <td class="mono-cell">87</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/9dd5f822-396f-4f2f-9df9-ebf31e7f6237.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -91,6 +97,7 @@
         <td class="mono-cell">64</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/e11fd875-25a3-4f30-ae93-05fafd290601.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -106,6 +113,7 @@
         <td class="mono-cell">78</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/1779af19-377d-422e-917b-7caa18fbed22.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -118,9 +126,10 @@
           <span class="status st-upcoming"><i></i>Coming up</span>
         </td>
         <td>—</td>
-        <td class="mono-cell">77</td>
+        <td class="mono-cell">78</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/2efde56d-780e-444b-b71f-3859171979b2.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -136,6 +145,7 @@
         <td class="mono-cell">94</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/54ec5e93-446c-4c66-bc2b-f35716c8a11d.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -151,6 +161,7 @@
         <td class="mono-cell">92</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/1830de43-e620-4982-a9d5-a543e89d36c9.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -166,6 +177,7 @@
         <td class="mono-cell">124</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/0805cf13-2827-40a7-8a04-ce2d2ee81882.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -181,6 +193,7 @@
         <td class="mono-cell">101</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/5811d8da-8562-43d3-bb74-30fc90bbc308.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -196,6 +209,7 @@
         <td class="mono-cell">48</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/ff625952-7279-4533-9dc4-4e534e52bf7f.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -211,6 +225,7 @@
         <td class="mono-cell">132</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/e3f3165d-b653-4b97-93c7-57d768c5b14c.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -226,6 +241,7 @@
         <td class="mono-cell">83</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/69d46ede-07fe-446c-a2ee-09bb1d945303.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -241,6 +257,7 @@
         <td class="mono-cell">75</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/98aa35a9-9954-4d1a-a0a6-2a00e89aa7d5.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -256,6 +273,7 @@
         <td class="mono-cell">33</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/fa8845c2-b546-4a77-9b02-9b36dfdc71b1.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -271,6 +289,7 @@
         <td class="mono-cell">68</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/004ea243-fe1a-47e6-9a0a-ddaaaab425d1.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -286,6 +305,7 @@
         <td class="mono-cell">66</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/97d25102-d476-4b07-a180-6d36811e896e.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -301,6 +321,7 @@
         <td class="mono-cell">104</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/87437f90-a6ad-44df-9ee2-d254932a0a11.html">View analytics →</a></td>
       </tr>
 
       <tr>
@@ -316,11 +337,12 @@
         <td class="mono-cell">98</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">— / —</td>
+        <td><a class="analytics-btn" href="events/f1bd18e4-b395-43e0-9664-04f745e363bf.html">View analytics →</a></td>
       </tr>
         </tbody>
       </table>
     </div>
-    <footer>Last updated 2026-09-17T12:13:53.098Z</footer>
+    <footer>Last updated Sep 17, 2026, 3:29 PM UTC</footer>
   </div>
 </body>
 </html>

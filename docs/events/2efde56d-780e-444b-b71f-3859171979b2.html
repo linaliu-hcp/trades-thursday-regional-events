@@ -50,7 +50,7 @@
   .chart-card-title { font-size: 0.95rem; font-weight: 700; }
   .chart-card-count { font-size: 0.78rem; color: var(--ink-faint); }
   .donut-row { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
-  .donut { width: 200px; height: 200px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#003a6d 0% 8.860759493670885%, #c2410c 8.860759493670885% 11.39240506329114%, #1e40af 11.39240506329114% 13.924050632911392%, #be185d 13.924050632911392% 16.455696202531644%, #0891b2 16.455696202531644% 18.987341772151897%, #7c3aed 18.987341772151897% 21.51898734177215%, #b45309 21.51898734177215% 24.050632911392402%, #4d7c0f 24.050632911392402% 26.582278481012654%, #9d174d 26.582278481012654% 29.113924050632907%, #334155 29.113924050632907% 31.64556962025316%, #9ca3af 31.64556962025316% 99.99999999999999%); position: relative; }
+  .donut { width: 200px; height: 200px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#003a6d 0% 8.75%, #c2410c 8.75% 11.25%, #1e40af 11.25% 13.75%, #be185d 13.75% 16.25%, #0891b2 16.25% 18.75%, #7c3aed 18.75% 21.25%, #b45309 21.25% 23.75%, #4d7c0f 23.75% 26.25%, #9d174d 26.25% 28.75%, #334155 28.75% 31.25%, #9ca3af 31.25% 100%); position: relative; }
   .donut::after { content: ""; position: absolute; inset: 32px; border-radius: 50%; background: var(--surface); }
   .legend { display: flex; flex-direction: column; gap: 9px; flex: 1; min-width: 220px; }
   .legend-row { display: flex; align-items: center; gap: 9px; font-size: 0.83rem; }
@@ -78,7 +78,7 @@
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All Regional Events
       </a>
-      <div class="updated-tag">Last updated Sep 17, 2026, 3:48 PM UTC</div>
+      <div class="updated-tag">Last updated <span class="updated-time-auto" data-updated-iso="2026-09-17T16:07:16.141Z">Sep 17, 2026, 4:07 PM UTC</span></div>
     </div>
 
     <div class="hdr">
@@ -87,8 +87,8 @@
     </div>
 
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-label">Registrations</div><div class="stat-value">79</div></div>
-      <div class="stat-card"><div class="stat-label">Companies</div><div class="stat-value">62</div></div>
+      <div class="stat-card"><div class="stat-label">Registrations</div><div class="stat-value">80</div></div>
+      <div class="stat-card"><div class="stat-label">Companies</div><div class="stat-value">63</div></div>
     </div>
 
     
@@ -107,7 +107,7 @@
         <div class="legend-row"><span class="legend-dot" style="background:#4d7c0f"></span><span class="legend-name">GRADY BROTHERS SERVICES</span><span class="legend-count">2</span></div>
         <div class="legend-row"><span class="legend-dot" style="background:#9d174d"></span><span class="legend-name">Clark Services</span><span class="legend-count">2</span></div>
         <div class="legend-row"><span class="legend-dot" style="background:#334155"></span><span class="legend-name">Beltway Air Conditioning Heating &amp; Plumbing</span><span class="legend-count">2</span></div>
-        <div class="legend-row"><span class="legend-dot" style="background:#9ca3af"></span><span class="legend-name">Other (52 companies)</span><span class="legend-count">54</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#9ca3af"></span><span class="legend-name">Other (53 companies)</span><span class="legend-count">55</span></div>
         </div>
       </div>
       <p class="note">Top 10 companies by registrant count, everything else grouped into "Other".</p>
@@ -126,6 +126,7 @@
         <div class="bar-row"><div class="bar-label">Owner Operator</div><div class="bar-track"><div class="bar-fill" style="width:7%;"></div></div><div class="bar-value">2</div></div>
         <div class="bar-row"><div class="bar-label">Admin</div><div class="bar-track"><div class="bar-fill" style="width:7%;"></div></div><div class="bar-value">2</div></div>
         <div class="bar-row"><div class="bar-label">Engineer</div><div class="bar-track"><div class="bar-fill" style="width:7%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">President</div><div class="bar-track"><div class="bar-fill" style="width:7%;"></div></div><div class="bar-value">2</div></div>
         <div class="bar-row"><div class="bar-label">Office Support</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">The Mam</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Owner operator</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
@@ -136,7 +137,6 @@
         <div class="bar-row"><div class="bar-label">General Manager</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">owqner</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Co owner</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
-        <div class="bar-row"><div class="bar-label">President</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">OWNER</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Outside sales representative</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">COO</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
@@ -152,7 +152,7 @@
     </div>
 
     <div class="chart-card">
-      <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">79 registered</div></div>
+      <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">80 registered</div></div>
       <div class="reg-list">
         <div class="reg-row"><span class="reg-name">Alawi Omar</span><span class="reg-company">Tanzanite Appliance Repair LLC</span></div>
         <div class="reg-row"><span class="reg-name">Amanda Kelly</span><span class="reg-company">Beltway Air Conditioning Heating &amp; Plumbing</span></div>
@@ -176,6 +176,7 @@
         <div class="reg-row"><span class="reg-name">David Rivera</span><span class="reg-company">Petrina &amp; Rivera Plumbing LLC</span></div>
         <div class="reg-row"><span class="reg-name">Deain Roberson</span><span class="reg-company">dominicus plumbing heating and cooling</span></div>
         <div class="reg-row"><span class="reg-name">Derrick Jackson</span><span class="reg-company">Precision</span></div>
+        <div class="reg-row"><span class="reg-name">Drew Cameron</span><span class="reg-company">Flow Odyssey &amp; Energy Design Systems</span></div>
         <div class="reg-row"><span class="reg-name">Eduardo Navarro</span><span class="reg-company">Refine and Repair</span></div>
         <div class="reg-row"><span class="reg-name">Fadi Baaklini</span><span class="reg-company">ProLift Garage Doors of Lansdale and Doylestown</span></div>
         <div class="reg-row"><span class="reg-name">Gary Abbott</span><span class="reg-company">A&amp;f plumbing service</span></div>
@@ -249,6 +250,16 @@
         hour: "numeric", minute: "2-digit", timeZoneName: "short",
       }).format(new Date(iso));
     } catch (e) { /* leave the server-rendered fallback in place */ }
+  });
+  document.querySelectorAll(".updated-time-auto[data-updated-iso]").forEach(function (el) {
+    var iso = el.getAttribute("data-updated-iso");
+    if (!iso) return;
+    try {
+      el.textContent = new Intl.DateTimeFormat("en-US", {
+        month: "short", day: "numeric", year: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short",
+      }).format(new Date(iso));
+    } catch (e) { /* leave the server-rendered UTC fallback in place */ }
   });
 })();
 </script>

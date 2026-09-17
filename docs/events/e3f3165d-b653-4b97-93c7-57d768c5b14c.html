@@ -78,7 +78,7 @@
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All Regional Events
       </a>
-      <div class="updated-tag">Last updated Sep 17, 2026, 3:48 PM UTC</div>
+      <div class="updated-tag">Last updated <span class="updated-time-auto" data-updated-iso="2026-09-17T16:07:16.141Z">Sep 17, 2026, 4:07 PM UTC</span></div>
     </div>
 
     <div class="hdr">
@@ -337,6 +337,16 @@
         hour: "numeric", minute: "2-digit", timeZoneName: "short",
       }).format(new Date(iso));
     } catch (e) { /* leave the server-rendered fallback in place */ }
+  });
+  document.querySelectorAll(".updated-time-auto[data-updated-iso]").forEach(function (el) {
+    var iso = el.getAttribute("data-updated-iso");
+    if (!iso) return;
+    try {
+      el.textContent = new Intl.DateTimeFormat("en-US", {
+        month: "short", day: "numeric", year: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short",
+      }).format(new Date(iso));
+    } catch (e) { /* leave the server-rendered UTC fallback in place */ }
   });
 })();
 </script>

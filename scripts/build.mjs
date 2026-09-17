@@ -283,10 +283,20 @@ const VIEWER_TIME_SCRIPT = `<script>
       }).format(new Date(iso));
     } catch (e) { /* leave the server-rendered fallback in place */ }
   });
+  document.querySelectorAll(".updated-time-auto[data-updated-iso]").forEach(function (el) {
+    var iso = el.getAttribute("data-updated-iso");
+    if (!iso) return;
+    try {
+      el.textContent = new Intl.DateTimeFormat("en-US", {
+        month: "short", day: "numeric", year: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short",
+      }).format(new Date(iso));
+    } catch (e) { /* leave the server-rendered UTC fallback in place */ }
+  });
 })();
 </script>`;
 
-function buildEventPage(row, analytics, updatedAtLabel) {
+function buildEventPage(row, analytics, updatedAtLabel, updatedAtIso) {
   const { registrationCount, companyCount, topCompanies, otherCompanyCount, otherRegistrantCount, titles, registrants } = analytics;
 
   const slices = topCompanies.map(([, count], i) => ({ color: CHART_COLORS[i], pct: registrationCount ? (count / registrationCount) * 100 : 0 }));
@@ -358,7 +368,7 @@ ${SHARED_STYLE_TOKENS}
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All Regional Events
       </a>
-      <div class="updated-tag">Last updated ${escapeHtml(updatedAtLabel)}</div>
+      <div class="updated-tag">Last updated <span class="updated-time-auto" data-updated-iso="${escapeHtml(updatedAtIso)}">${escapeHtml(updatedAtLabel)}</span></div>
     </div>
 
     <div class="hdr">
@@ -451,7 +461,7 @@ async function main() {
     };
     rows.push(row);
 
-    const eventHtml = buildEventPage(row, analytics, updatedAtLabel);
+    const eventHtml = buildEventPage(row, analytics, updatedAtLabel, updatedAt.toISOString());
     await fs.writeFile(`docs/events/${e.id}.html`, eventHtml);
   }
 
@@ -522,7 +532,7 @@ ${SHARED_STYLE_TOKENS}
         </tbody>
       </table>
     </div>
-    <footer>Last updated ${escapeHtml(updatedAtLabel)}</footer>
+    <footer>Last updated <span class="updated-time-auto" data-updated-iso="${escapeHtml(updatedAt.toISOString())}">${escapeHtml(updatedAtLabel)}</span></footer>
   </div>
   ${VIEWER_TIME_SCRIPT}
 </body>

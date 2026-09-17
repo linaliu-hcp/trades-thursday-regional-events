@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seattle, WA — Trades Thursday Analytics</title>
+<style>
+
+  :root {
+    --bg: #f8f9fb; --surface: #ffffff; --surface-2: #f3f4f6;
+    --ink: #111827; --ink-soft: #4b5563; --ink-faint: #6b7280;
+    --line: #e5e7eb; --line-strong: #d1d5db;
+    --brand-navy: #003a6d; --accent: #003a6d; --accent-soft: #e3e8ef;
+    --good: #166534; --good-soft: #dcfce7;
+    --warn: #92400e; --warn-soft: #fef3c7;
+    --critical: #991b1b; --critical-soft: #fee2e2;
+    --info: #1e40af; --info-soft: #dbeafe;
+    --shadow: 0 1px 2px rgba(17, 24, 39, 0.06), 0 1px 0 rgba(17, 24, 39, 0.03);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115; --surface: #17191f; --surface-2: #1d2028;
+      --ink: #f3f4f6; --ink-soft: #a3a8b3; --ink-faint: #6b7280;
+      --line: #2a2d36; --line-strong: #383c47;
+      --brand-navy: #6fa8dc; --accent: #6fa8dc; --accent-soft: #1c2740;
+      --good: #4ade80; --good-soft: #16321f;
+      --warn: #fbbf24; --warn-soft: #3a2c10;
+      --critical: #f87171; --critical-soft: #3a1a1a;
+      --info: #60a5fa; --info-soft: #1c2c4d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 2.5rem 1.25rem 4rem; }
+
+  .wrap { max-width: 920px; margin: 0 auto; }
+  .top-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+  .back { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+  .back:hover { color: var(--accent); }
+  .updated-tag { font-size: 0.75rem; color: var(--ink-faint); background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; white-space: nowrap; }
+  .hdr { margin-bottom: 24px; }
+  .hdr h1 { font-size: 1.4rem; margin: 0 0 4px; color: var(--brand-navy); }
+  .hdr .sub { color: var(--ink-faint); font-size: 0.9rem; }
+  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 20px 22px; }
+  .stat-label { font-size: 0.8rem; color: var(--ink-faint); font-weight: 600; }
+  .stat-value { font-size: 2.4rem; font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 22px 24px; margin-top: 20px; }
+  .chart-card:first-of-type { margin-top: 0; }
+  .chart-card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .chart-card-title { font-size: 0.95rem; font-weight: 700; }
+  .chart-card-count { font-size: 0.78rem; color: var(--ink-faint); }
+  .donut-row { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
+  .donut { width: 200px; height: 200px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#003a6d 0% 4.3478260869565215%, #c2410c 4.3478260869565215% 8.695652173913043%, #1e40af 8.695652173913043% 13.043478260869565%, #be185d 13.043478260869565% 17.391304347826086%, #0891b2 17.391304347826086% 20.289855072463766%, #7c3aed 20.289855072463766% 23.188405797101446%, #b45309 23.188405797101446% 26.086956521739125%, #4d7c0f 26.086956521739125% 28.985507246376805%, #9d174d 28.985507246376805% 31.884057971014485%, #334155 31.884057971014485% 34.782608695652165%, #9ca3af 34.782608695652165% 100%); position: relative; }
+  .donut::after { content: ""; position: absolute; inset: 32px; border-radius: 50%; background: var(--surface); }
+  .legend { display: flex; flex-direction: column; gap: 9px; flex: 1; min-width: 220px; }
+  .legend-row { display: flex; align-items: center; gap: 9px; font-size: 0.83rem; }
+  .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .legend-name { flex: 1; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .legend-count { color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+  .bar-row { display: grid; grid-template-columns: 140px 1fr 32px; align-items: center; gap: 10px; }
+  .bar-label { font-size: 0.8rem; color: var(--ink-soft); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { background: var(--surface-2); border-radius: 4px; height: 16px; }
+  .bar-fill { background: var(--accent); height: 100%; border-radius: 4px; }
+  .bar-value { font-size: 0.78rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .reg-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  .reg-row { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.83rem; }
+  .reg-name { font-weight: 600; flex-shrink: 0; }
+  .reg-company { color: var(--ink-faint); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .note { font-size: 0.78rem; color: var(--ink-faint); margin-top: 16px; line-height: 1.5; }
+  .empty { color: var(--ink-faint); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top-row">
+      <a class="back" href="../index.html">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All Regional Events
+      </a>
+      <div class="updated-tag">Last updated Sep 17, 2026, 3:27 PM UTC</div>
+    </div>
+
+    <div class="hdr">
+      <h1>Seattle, WA</h1>
+      <div class="sub">Thu, Oct 1, 2:00 PM PDT</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-label">Registrations</div><div class="stat-value">69</div></div>
+      <div class="stat-card"><div class="stat-label">Companies</div><div class="stat-value">51</div></div>
+    </div>
+
+    
+    <div class="chart-card">
+      <div class="chart-card-title">Companies Distribution</div>
+      <div class="donut-row" style="margin-top:16px;">
+        <div class="donut"></div>
+        <div class="legend">
+        <div class="legend-row"><span class="legend-dot" style="background:#003a6d"></span><span class="legend-name">West Edge Landworks</span><span class="legend-count">3</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#c2410c"></span><span class="legend-name">Wenatchee heating and cooling</span><span class="legend-count">3</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#1e40af"></span><span class="legend-name">Minshall Exteriors</span><span class="legend-count">3</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#be185d"></span><span class="legend-name">The Bright Plumbing Co.</span><span class="legend-count">3</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#0891b2"></span><span class="legend-name">Alpha Solutions</span><span class="legend-count">2</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#7c3aed"></span><span class="legend-name">Smith plumbing</span><span class="legend-count">2</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#b45309"></span><span class="legend-name">Skagit Plumbing</span><span class="legend-count">2</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#4d7c0f"></span><span class="legend-name">Crest Cleaning Services</span><span class="legend-count">2</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#9d174d"></span><span class="legend-name">American Modern Renovations LLC</span><span class="legend-count">2</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#334155"></span><span class="legend-name">Marcus &amp; Luigi HVAC</span><span class="legend-count">2</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#9ca3af"></span><span class="legend-name">Other (41 companies)</span><span class="legend-count">45</span></div>
+        </div>
+      </div>
+      <p class="note">Top 10 companies by registrant count, everything else grouped into "Other".</p>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-card-title">User By Title</div>
+      <div class="bar-chart">
+        <div class="bar-row"><div class="bar-label">Owner</div><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><div class="bar-value">17</div></div>
+        <div class="bar-row"><div class="bar-label">CEO</div><div class="bar-track"><div class="bar-fill" style="width:29%;"></div></div><div class="bar-value">5</div></div>
+        <div class="bar-row"><div class="bar-label">Co-Owner</div><div class="bar-track"><div class="bar-fill" style="width:18%;"></div></div><div class="bar-value">3</div></div>
+        <div class="bar-row"><div class="bar-label">Project Manager</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">General Manager</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">Sales</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">Accounts Specialist</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">President</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">GM</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">Member</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Head plumber</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Admin Assistant</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Maintenance Manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Office Manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Supervisor</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Tech</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Plumbing company owner</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Co-owner</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">VP</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Office Admin</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">HVAC Mechanic</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Assistant</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Office Clerk</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Office manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Sr. Marketing Manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">owner</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">CPA/Cash Flow &amp; Profit Advisor</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Designer</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Co owner</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Office Staff</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">painting</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Project Manger</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">co-owner</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Sales Manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Owner/Operator</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Exclusion Tech</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Vice President</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Project Manager &amp; Business Operations</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">COO</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Dispatcher</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">69 registered</div></div>
+      <div class="reg-list">
+        <div class="reg-row"><span class="reg-name">Aaron</span><span class="reg-company">Holowchuk Wood Services</span></div>
+        <div class="reg-row"><span class="reg-name">Abdullahi</span><span class="reg-company">Virginia Mason</span></div>
+        <div class="reg-row"><span class="reg-name">Adrian</span><span class="reg-company">Wenatchee heating and cooling</span></div>
+        <div class="reg-row"><span class="reg-name">alan</span><span class="reg-company">Innovative Leak Detection</span></div>
+        <div class="reg-row"><span class="reg-name">Alexander</span><span class="reg-company">Sharp Edge Exteriors</span></div>
+        <div class="reg-row"><span class="reg-name">Alexey</span><span class="reg-company">Hydra Appliance Repair</span></div>
+        <div class="reg-row"><span class="reg-name">Alisha</span><span class="reg-company">Port Orchard Plumbing</span></div>
+        <div class="reg-row"><span class="reg-name">Analisa</span><span class="reg-company">A&amp;E Backflow Testing LLC</span></div>
+        <div class="reg-row"><span class="reg-name">anette</span><span class="reg-company">The Bright Plumbing Co.</span></div>
+        <div class="reg-row"><span class="reg-name">Ben</span><span class="reg-company">Petronum</span></div>
+        <div class="reg-row"><span class="reg-name">Bradley</span><span class="reg-company">Rodent Guard Pest Control</span></div>
+        <div class="reg-row"><span class="reg-name">Brandon</span><span class="reg-company">American Modern Renovations LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Brittany</span><span class="reg-company">BB Heating LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Chad</span><span class="reg-company">Artisan Exterior PNW</span></div>
+        <div class="reg-row"><span class="reg-name">Chad</span><span class="reg-company">Ironclad Doors</span></div>
+        <div class="reg-row"><span class="reg-name">Claudia</span><span class="reg-company">Rodent Guard Pest Control</span></div>
+        <div class="reg-row"><span class="reg-name">Colby</span><span class="reg-company">A Perfect Detail</span></div>
+        <div class="reg-row"><span class="reg-name">Cole</span><span class="reg-company">West Edge Landworks</span></div>
+        <div class="reg-row"><span class="reg-name">Dayton</span><span class="reg-company">West Sound Property Solutions</span></div>
+        <div class="reg-row"><span class="reg-name">Deniro</span><span class="reg-company">MeekasCleaningServicesLLC</span></div>
+        <div class="reg-row"><span class="reg-name">Drew</span><span class="reg-company">Smith plumbing</span></div>
+        <div class="reg-row"><span class="reg-name">Edwin</span><span class="reg-company">Prado painting</span></div>
+        <div class="reg-row"><span class="reg-name">Eric</span><span class="reg-company">Smith plumbing</span></div>
+        <div class="reg-row"><span class="reg-name">Eric</span><span class="reg-company">A&amp;E Backflow Testing</span></div>
+        <div class="reg-row"><span class="reg-name">ERIC</span><span class="reg-company">TOP DOG FENCE &amp; DECK</span></div>
+        <div class="reg-row"><span class="reg-name">Erica</span><span class="reg-company">NW Summit Heating &amp; Cooling, LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Esthefanie</span><span class="reg-company">Crest Cleaning Services</span></div>
+        <div class="reg-row"><span class="reg-name">Francisco</span><span class="reg-company">The Bright Plumbing Co.</span></div>
+        <div class="reg-row"><span class="reg-name">Gerrit</span><span class="reg-company">West Sound Property Solutions</span></div>
+        <div class="reg-row"><span class="reg-name">Giselle</span><span class="reg-company">Spotlight Locally</span></div>
+        <div class="reg-row"><span class="reg-name">Javier</span><span class="reg-company">The Bright Plumbing Co.</span></div>
+        <div class="reg-row"><span class="reg-name">Josephine</span><span class="reg-company">Maid in America</span></div>
+        <div class="reg-row"><span class="reg-name">Juan</span><span class="reg-company">Crest Cleaning Services</span></div>
+        <div class="reg-row"><span class="reg-name">Karen</span><span class="reg-company">Alpha Solutions</span></div>
+        <div class="reg-row"><span class="reg-name">Karissa</span><span class="reg-company">American Modern Renovations LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Kayla Ann</span><span class="reg-company">Minshall Exteriors</span></div>
+        <div class="reg-row"><span class="reg-name">Kevin</span><span class="reg-company">Cascadia Construction Group</span></div>
+        <div class="reg-row"><span class="reg-name">Lance</span><span class="reg-company">Minshall Exteriors</span></div>
+        <div class="reg-row"><span class="reg-name">Laura</span><span class="reg-company">Seamlessly Gutters if</span></div>
+        <div class="reg-row"><span class="reg-name">Lauren</span><span class="reg-company">Housecall Pro</span></div>
+        <div class="reg-row"><span class="reg-name">Liviu</span><span class="reg-company">LeviArs Design and Remodeling</span></div>
+        <div class="reg-row"><span class="reg-name">Loreto</span><span class="reg-company">Wenatchee heating and cooling</span></div>
+        <div class="reg-row"><span class="reg-name">Luigin</span><span class="reg-company">Marcus &amp; Luigi HVAC</span></div>
+        <div class="reg-row"><span class="reg-name">Marcus</span><span class="reg-company">Marcus &amp; Luigi HVAC</span></div>
+        <div class="reg-row"><span class="reg-name">MARIA</span><span class="reg-company">THE BRIGHT PLUMBING LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Mario</span><span class="reg-company">NW Summit Heating &amp; Cooling, LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Mark</span><span class="reg-company">Port Orchard Plumbing</span></div>
+        <div class="reg-row"><span class="reg-name">Matt</span><span class="reg-company">Seamlessly Gutters llc</span></div>
+        <div class="reg-row"><span class="reg-name">Matt</span><span class="reg-company">Eastside Exterminators</span></div>
+        <div class="reg-row"><span class="reg-name">Megan</span><span class="reg-company">Armes Electric Inc</span></div>
+        <div class="reg-row"><span class="reg-name">Neil</span><span class="reg-company">Confident House Cleaning</span></div>
+        <div class="reg-row"><span class="reg-name">Nicolae</span><span class="reg-company">LeviArs Floors and Interiors</span></div>
+        <div class="reg-row"><span class="reg-name">Noel</span><span class="reg-company">Alpha Solutions</span></div>
+        <div class="reg-row"><span class="reg-name">OSCAR</span><span class="reg-company">Moder Compactor Repair</span></div>
+        <div class="reg-row"><span class="reg-name">Phillip</span><span class="reg-company">Re-Nu Remdeling</span></div>
+        <div class="reg-row"><span class="reg-name">RICARDO</span><span class="reg-company">Wenatchee heating and cooling</span></div>
+        <div class="reg-row"><span class="reg-name">Roman</span><span class="reg-company">Sasquatch Plumbing Services</span></div>
+        <div class="reg-row"><span class="reg-name">Ruslan</span><span class="reg-company">Texora Painting</span></div>
+        <div class="reg-row"><span class="reg-name">Sam</span><span class="reg-company">Eco Roofing</span></div>
+        <div class="reg-row"><span class="reg-name">Shane</span><span class="reg-company">West Edge Landworks</span></div>
+        <div class="reg-row"><span class="reg-name">Shane</span><span class="reg-company">Clean Evergreen</span></div>
+        <div class="reg-row"><span class="reg-name">Socheata</span><span class="reg-company">SSTrue Profit Solutions LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Stephanie</span><span class="reg-company">Pierce County Handyman</span></div>
+        <div class="reg-row"><span class="reg-name">Tabetha</span><span class="reg-company">Confident House Cleaning, LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Tamara</span><span class="reg-company">Minshall Exteriors</span></div>
+        <div class="reg-row"><span class="reg-name">Thalen</span><span class="reg-company">Skagit Plumbing</span></div>
+        <div class="reg-row"><span class="reg-name">Thalen</span><span class="reg-company">Skagit Plumbing</span></div>
+        <div class="reg-row"><span class="reg-name">Todd</span><span class="reg-company">West Edge Landworks</span></div>
+        <div class="reg-row"><span class="reg-name">Vitalii</span><span class="reg-company">Y&amp;V Electric LLC</span></div>
+      </div>
+      <p class="note">First name + company only — no email, phone, or last name is published here.</p>
+    </div>
+    
+  </div>
+</body>
+</html>

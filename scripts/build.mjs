@@ -264,6 +264,28 @@ function conicGradient(slices) {
   return `conic-gradient(${stops.join(", ")})`;
 }
 
+// Server-renders each event time in the EVENT's own timezone (see
+// formatTime above) — this can't know the viewer's timezone ahead of
+// time, so it's the honest first paint. This script then swaps every
+// .ev-time-auto element's text to the VIEWER's own local timezone,
+// resolved via Intl.DateTimeFormat's default (no `timeZone` passed) — a
+// standard browser API, not IP-based geolocation. Same technique as the
+// internal dashboard's EventTimeLabel.tsx component.
+const VIEWER_TIME_SCRIPT = `<script>
+(function () {
+  document.querySelectorAll(".ev-time-auto[data-start-iso]").forEach(function (el) {
+    var iso = el.getAttribute("data-start-iso");
+    if (!iso) return;
+    try {
+      el.textContent = new Intl.DateTimeFormat("en-US", {
+        weekday: "short", month: "short", day: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short",
+      }).format(new Date(iso));
+    } catch (e) { /* leave the server-rendered fallback in place */ }
+  });
+})();
+</script>`;
+
 function buildEventPage(row, analytics, updatedAtLabel) {
   const { registrationCount, companyCount, topCompanies, otherCompanyCount, otherRegistrantCount, titles, registrants } = analytics;
 
@@ -341,7 +363,7 @@ ${SHARED_STYLE_TOKENS}
 
     <div class="hdr">
       <h1>${escapeHtml(row.cityState)}</h1>
-      <div class="sub">${escapeHtml(row.when)}</div>
+      <div class="sub ev-time-auto" data-start-iso="${escapeHtml(row.startTimeIso)}">${escapeHtml(row.when)}</div>
     </div>
 
     <div class="stat-row">
@@ -374,6 +396,7 @@ ${SHARED_STYLE_TOKENS}
     </div>
     `}
   </div>
+  ${VIEWER_TIME_SCRIPT}
 </body>
 </html>
 `;
@@ -420,6 +443,7 @@ async function main() {
       id: e.id,
       cityState,
       when: formatTime(e.start_time, e.timezone),
+      startTimeIso: e.start_time,
       hostName,
       status,
       venueType,
@@ -435,7 +459,7 @@ async function main() {
       <tr>
         <td>
           <div class="ev-name">${escapeHtml(r.cityState)}</div>
-          <div class="ev-sub">${escapeHtml(r.when)}</div>
+          <div class="ev-sub ev-time-auto" data-start-iso="${escapeHtml(r.startTimeIso)}">${escapeHtml(r.when)}</div>
           <div class="ev-host">${escapeHtml(r.hostName)}</div>
         </td>
         <td>
@@ -500,6 +524,7 @@ ${SHARED_STYLE_TOKENS}
     </div>
     <footer>Last updated ${escapeHtml(updatedAtLabel)}</footer>
   </div>
+  ${VIEWER_TIME_SCRIPT}
 </body>
 </html>
 `;

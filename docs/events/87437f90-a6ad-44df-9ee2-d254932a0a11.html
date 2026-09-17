@@ -78,12 +78,12 @@
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All Regional Events
       </a>
-      <div class="updated-tag">Last updated Sep 17, 2026, 3:34 PM UTC</div>
+      <div class="updated-tag">Last updated Sep 17, 2026, 3:48 PM UTC</div>
     </div>
 
     <div class="hdr">
       <h1>San Diego, CA</h1>
-      <div class="sub">Thu, Oct 1, 2:00 PM PDT</div>
+      <div class="sub ev-time-auto" data-start-iso="2026-10-01T21:00:00Z">Thu, Oct 1, 2:00 PM PDT</div>
     </div>
 
     <div class="stat-row">
@@ -278,5 +278,19 @@
     </div>
     
   </div>
+  <script>
+(function () {
+  document.querySelectorAll(".ev-time-auto[data-start-iso]").forEach(function (el) {
+    var iso = el.getAttribute("data-start-iso");
+    if (!iso) return;
+    try {
+      el.textContent = new Intl.DateTimeFormat("en-US", {
+        weekday: "short", month: "short", day: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short",
+      }).format(new Date(iso));
+    } catch (e) { /* leave the server-rendered fallback in place */ }
+  });
+})();
+</script>
 </body>
 </html>

@@ -532,7 +532,7 @@ ${SHARED_STYLE_TOKENS}
         </tbody>
       </table>
     </div>
-    <footer>Last updated <span class="updated-time-auto" data-updated-iso="${escapeHtml(updatedAt.toISOString())}">${escapeHtml(updatedAtLabel)}</span></footer>
+    <footer>This page refreshes automatically every 5 minutes. Last updated <span class="updated-time-auto" data-updated-iso="${escapeHtml(updatedAt.toISOString())}">${escapeHtml(updatedAtLabel)}</span></footer>
   </div>
   ${VIEWER_TIME_SCRIPT}
 </body>

@@ -342,7 +342,7 @@
         </tbody>
       </table>
     </div>
-    <footer>Last updated Sep 17, 2026, 3:50 PM UTC</footer>
+    <footer>Last updated <span class="updated-time-auto" data-updated-iso="2026-09-17T16:08:46.246Z">Sep 17, 2026, 4:08 PM UTC</span></footer>
   </div>
   <script>
 (function () {
@@ -355,6 +355,16 @@
         hour: "numeric", minute: "2-digit", timeZoneName: "short",
       }).format(new Date(iso));
     } catch (e) { /* leave the server-rendered fallback in place */ }
+  });
+  document.querySelectorAll(".updated-time-auto[data-updated-iso]").forEach(function (el) {
+    var iso = el.getAttribute("data-updated-iso");
+    if (!iso) return;
+    try {
+      el.textContent = new Intl.DateTimeFormat("en-US", {
+        month: "short", day: "numeric", year: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short",
+      }).format(new Date(iso));
+    } catch (e) { /* leave the server-rendered UTC fallback in place */ }
   });
 })();
 </script>

@@ -95,8 +95,9 @@ async function fetchEventDetail(id, token) {
 // Real endpoint, confirmed live 2026-09-17 (already used server-side by the
 // internal dashboard's fetchCheckInStaffHosts, lib/goldcast.ts) — each
 // result carries user.first_name/last_name/email/phone_number/company/
-// title. Only first_name and company are read out of it here; everything
-// else is left on the object and never touches the generated HTML.
+// title. Only first_name, last_name, and company are read out of it here;
+// email/phone_number are never touched, even though this endpoint carries
+// them — this is a public, no-login, search-indexable site.
 async function fetchEventMembers(eventId, token) {
   const members = [];
   let next = `${GOLDCAST_BASE_URL}/event/event-members/?event=${eventId}&limit=250`;
@@ -117,12 +118,14 @@ function computeAnalytics(members) {
 
   for (const m of members) {
     const firstName = m.user?.first_name?.trim();
+    const lastName = m.user?.last_name?.trim();
     const company = m.user?.company?.trim();
     const title = m.user?.title?.trim();
 
     if (company) companyCounts.set(company, (companyCounts.get(company) ?? 0) + 1);
     if (title) titleCounts.set(title, (titleCounts.get(title) ?? 0) + 1);
-    if (firstName) registrants.push({ name: firstName, company: company || "—" });
+    const fullName = [firstName, lastName].filter(Boolean).join(" ");
+    if (fullName) registrants.push({ name: fullName, company: company || "—" });
   }
 
   const sortedCompanies = [...companyCounts.entries()].sort((a, b) => b[1] - a[1]);
@@ -367,7 +370,7 @@ ${SHARED_STYLE_TOKENS}
       <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">${registrationCount} registered</div></div>
       <div class="reg-list">${regRows}
       </div>
-      <p class="note">First name + company only — no email, phone, or last name is published here.</p>
+      <p class="note">Name + company only — no email or phone number is published here.</p>
     </div>
     `}
   </div>

@@ -1,0 +1,8 @@
+{
+  "name": "trades-thursday-regional-events",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "snowflake-sdk": "^3.3.0"
+  }
+}

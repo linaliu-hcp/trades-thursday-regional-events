@@ -7,8 +7,14 @@ This is intentionally isolated from the internal ops dashboard
 (`trades-thursday-dashboard`, private repo): it has its own read-only
 Goldcast API token (repo secret, never exposed in this repo's files or
 output), fetches directly from Goldcast, and only ever renders event
-name/city/state/date/time and a public registration link — no host
-contact info, no payout data, no attendance/anomaly data.
+name/city/state/date/time, a public registration link, and (as of
+2026-09-23) an aggregate HCP / Non-HCP registrant split per event — no
+host contact info, no payout data, no attendance/anomaly data, and no
+individual registrant identity ever behind that split (see
+`scripts/build.mjs`'s `classifyAudienceMix` — registrant emails are
+matched in memory against Snowflake's active-org email set and
+immediately reduced to two counts; the emails themselves are never
+written anywhere).
 
 ## How it works
 
@@ -24,5 +30,10 @@ contact info, no payout data, no attendance/anomaly data.
 
 1. Add a repo secret `GOLDCAST_API_TOKEN` (Settings → Secrets and
    variables → Actions).
-2. Enable GitHub Pages: Settings → Pages → Source: Deploy from a branch →
+2. Add six more repo secrets for the HCP / Non-HCP split, mirroring the
+   private dashboard's own env var names exactly (same dedicated service
+   account, sourced from 1Password — never hardcoded anywhere in this
+   repo): the account identifier, username, warehouse, role, and the
+   private key + passphrase pair.
+3. Enable GitHub Pages: Settings → Pages → Source: Deploy from a branch →
    Branch: `main`, folder: `/docs`.

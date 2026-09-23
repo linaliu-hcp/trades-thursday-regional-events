@@ -13,6 +13,14 @@
 //     dedicated, narrowly-scoped read-only token, separate from the
 //     internal dashboard's own key. If this secret isn't set yet, the Host
 //     column just renders "—" rather than failing the whole build.
+//   - Snowflake, queried directly by this script — see fetchActiveOrgEmails
+//     below. Independent of the private dashboard/Vercel entirely.
+//     Registrant emails are matched in memory and immediately reduced to
+//     two counts per event; the emails themselves are never written to
+//     disk or into the generated HTML, only the resulting numbers. Same
+//     "don't fail the whole build" pattern as Airtable above: missing
+//     config or a failed query just leaves the HCP / Non-HCP column at
+//     "— / —".
 //
 // The event-members endpoint carries each registrant's email and phone
 // number too, but this is a public, search-indexable, no-login site — only
@@ -23,6 +31,67 @@ const GOLDCAST_BASE_URL = "https://customapi.goldcast.io";
 const AIRTABLE_BASE_URL = "https://api.airtable.com/v0";
 const AIRTABLE_BASE_ID = "apppUZpHj2G87aOUL";
 const CONFIRMED_EVENTS_TABLE_ID = "tbl5JUSq8O02BiNCh";
+// Identical query to the private dashboard's lib/snowflake.ts —
+// intentionally kept in sync rather than imported, since these are two
+// separate repos with two separate deploy targets.
+const ACTIVE_ORG_EMAILS_QUERY = `
+  SELECT LOWER(best_email) AS EMAIL
+  FROM analytics.main.dim_organization
+  WHERE excluded_org = 0 AND best_email IS NOT NULL
+  UNION
+  SELECT LOWER(c.contact_email) AS EMAIL
+  FROM analytics.main.dim_salesforce_contact c
+  JOIN analytics.main.dim_organization o
+    ON o.organization_id = c.organization_id
+  WHERE o.excluded_org = 0 AND c.contact_email IS NOT NULL
+`;
+
+async function fetchActiveOrgEmails(config) {
+  const required = ["account", "username", "warehouse", "role", "privateKey", "privateKeyPass"];
+  if (required.some((k) => !config[k])) {
+    console.warn("Snowflake config incomplete — HCP / Non-HCP column will show \"— / —\"");
+    return null;
+  }
+
+  const snowflake = (await import("snowflake-sdk")).default;
+  snowflake.configure({
+    customLogger: {
+      error: (m) => console.error(m),
+      warn: () => {},
+      info: () => {},
+      debug: () => {},
+      trace: () => {},
+    },
+  });
+
+  const connection = snowflake.createConnection({
+    account: config.account,
+    username: config.username,
+    authenticator: "SNOWFLAKE_JWT",
+    privateKey: config.privateKey,
+    privateKeyPass: config.privateKeyPass,
+    warehouse: config.warehouse,
+    role: config.role,
+  });
+
+  try {
+    await new Promise((resolve, reject) => {
+      connection.connect((err) => (err ? reject(err) : resolve()));
+    });
+    const rows = await new Promise((resolve, reject) => {
+      connection.execute({
+        sqlText: ACTIVE_ORG_EMAILS_QUERY,
+        complete: (err, _stmt, r) => (err ? reject(err) : resolve(r ?? [])),
+      });
+    });
+    return new Set(rows.map((r) => r.EMAIL).filter((e) => typeof e === "string"));
+  } catch (err) {
+    console.warn("Snowflake query failed:", err.message);
+    return null;
+  } finally {
+    await new Promise((resolve) => connection.destroy(() => resolve()));
+  }
+}
 
 const PROGRAM_PREFIX = /trades thursday/i;
 const REGIONAL_PATTERN = /regional/i;
@@ -109,6 +178,23 @@ async function fetchEventMembers(eventId, token) {
     next = data.next;
   }
   return members;
+}
+
+// Only "Registered" rows count — same rule the private dashboard's
+// Audience Mix uses (see lib/data.ts's classifyAudience). Immediately
+// reduces to two counts; the emails themselves never leave this function.
+function classifyAudienceMix(members, activeOrgEmails) {
+  if (!activeOrgEmails) return { hcpCustomers: null, nonCustomers: null };
+  let hcp = 0;
+  let non = 0;
+  for (const m of members) {
+    if (m.status !== "Registered") continue;
+    const email = m.user?.email?.trim().toLowerCase();
+    if (!email) continue;
+    if (activeOrgEmails.has(email)) hcp++;
+    else non++;
+  }
+  return { hcpCustomers: hcp, nonCustomers: non };
 }
 
 function computeAnalytics(members) {
@@ -429,6 +515,14 @@ async function main() {
   regional.sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime());
 
   const hostNamesByGcid = await fetchRegionalHostNames(airtableKey);
+  const activeOrgEmails = await fetchActiveOrgEmails({
+    account: process.env.SNOWFLAKE_ACCOUNT,
+    username: process.env.SNOWFLAKE_USERNAME,
+    warehouse: process.env.SNOWFLAKE_WAREHOUSE,
+    role: process.env.SNOWFLAKE_ROLE,
+    privateKey: process.env.SNOWFLAKE_PRIVATE_KEY,
+    privateKeyPass: process.env.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE,
+  });
   const updatedAt = new Date();
   const updatedAtLabel = formatUpdatedAt(updatedAt);
 
@@ -448,6 +542,11 @@ async function main() {
 
     const members = await fetchEventMembers(e.id, goldcastToken);
     const analytics = computeAnalytics(members);
+    const audienceMix = classifyAudienceMix(members, activeOrgEmails);
+    const hcpNonHcp =
+      audienceMix.hcpCustomers !== null && audienceMix.nonCustomers !== null
+        ? `${audienceMix.hcpCustomers} / ${audienceMix.nonCustomers}`
+        : "— / —";
 
     const row = {
       id: e.id,
@@ -458,6 +557,7 @@ async function main() {
       status,
       venueType,
       registered: e.registrant_count ?? analytics.registrationCount ?? 0,
+      hcpNonHcp,
     };
     rows.push(row);
 
@@ -478,7 +578,7 @@ async function main() {
         <td>${escapeHtml(r.venueType || "—")}</td>
         <td class="mono-cell">${escapeHtml(r.registered)}</td>
         <td class="mono-cell">—</td>
-        <td class="mono-cell">— / —</td>
+        <td class="mono-cell">${escapeHtml(r.hcpNonHcp)}</td>
         <td><a class="analytics-btn" href="events/${r.id}.html">View analytics →</a></td>
       </tr>`).join("\n");
 

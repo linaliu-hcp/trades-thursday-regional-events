@@ -50,7 +50,7 @@
   .chart-card-title { font-size: 0.95rem; font-weight: 700; }
   .chart-card-count { font-size: 0.78rem; color: var(--ink-faint); }
   .donut-row { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
-  .donut { width: 200px; height: 200px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#003a6d 0% 6.779661016949152%, #c2410c 6.779661016949152% 10.169491525423728%, #1e40af 10.169491525423728% 13.559322033898304%, #be185d 13.559322033898304% 16.94915254237288%, #0891b2 16.94915254237288% 20.338983050847453%, #7c3aed 20.338983050847453% 23.728813559322028%, #b45309 23.728813559322028% 27.118644067796602%, #4d7c0f 27.118644067796602% 30.508474576271176%, #9d174d 30.508474576271176% 32.20338983050846%, #334155 32.20338983050846% 33.89830508474575%, #9ca3af 33.89830508474575% 100%); position: relative; }
+  .donut { width: 200px; height: 200px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#003a6d 0% 6.349206349206349%, #c2410c 6.349206349206349% 9.523809523809524%, #1e40af 9.523809523809524% 12.698412698412698%, #be185d 12.698412698412698% 15.873015873015872%, #0891b2 15.873015873015872% 19.047619047619047%, #7c3aed 19.047619047619047% 22.22222222222222%, #b45309 22.22222222222222% 25.396825396825395%, #4d7c0f 25.396825396825395% 28.57142857142857%, #9d174d 28.57142857142857% 31.746031746031743%, #334155 31.746031746031743% 33.33333333333333%, #9ca3af 33.33333333333333% 99.99999999999999%); position: relative; }
   .donut::after { content: ""; position: absolute; inset: 32px; border-radius: 50%; background: var(--surface); }
   .legend { display: flex; flex-direction: column; gap: 9px; flex: 1; min-width: 220px; }
   .legend-row { display: flex; align-items: center; gap: 9px; font-size: 0.83rem; }
@@ -78,7 +78,7 @@
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All Regional Events
       </a>
-      <div class="updated-tag">Last updated <span class="updated-time-auto" data-updated-iso="2026-09-23T19:00:07.576Z">Sep 23, 2026, 7:00 PM UTC</span></div>
+      <div class="updated-tag">Last updated <span class="updated-time-auto" data-updated-iso="2026-09-23T22:13:32.197Z">Sep 23, 2026, 10:13 PM UTC</span></div>
     </div>
 
     <div class="hdr">
@@ -87,8 +87,8 @@
     </div>
 
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-label">Registrations</div><div class="stat-value">59</div></div>
-      <div class="stat-card"><div class="stat-label">Companies</div><div class="stat-value">49</div></div>
+      <div class="stat-card"><div class="stat-label">Registrations</div><div class="stat-value">63</div></div>
+      <div class="stat-card"><div class="stat-label">Companies</div><div class="stat-value">52</div></div>
     </div>
 
     
@@ -105,9 +105,9 @@
         <div class="legend-row"><span class="legend-dot" style="background:#7c3aed"></span><span class="legend-name">John Gleason Plumbing</span><span class="legend-count">2</span></div>
         <div class="legend-row"><span class="legend-dot" style="background:#b45309"></span><span class="legend-name">Royalty Heating &amp; Air</span><span class="legend-count">2</span></div>
         <div class="legend-row"><span class="legend-dot" style="background:#4d7c0f"></span><span class="legend-name">Royalty Heating &amp; air</span><span class="legend-count">2</span></div>
-        <div class="legend-row"><span class="legend-dot" style="background:#9d174d"></span><span class="legend-name">Concord Rooter and Plumbing</span><span class="legend-count">1</span></div>
-        <div class="legend-row"><span class="legend-dot" style="background:#334155"></span><span class="legend-name">Kelly Plumbing &amp; Heating Inc</span><span class="legend-count">1</span></div>
-        <div class="legend-row"><span class="legend-dot" style="background:#9ca3af"></span><span class="legend-name">Other (39 companies)</span><span class="legend-count">39</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#9d174d"></span><span class="legend-name">Smart4Smart</span><span class="legend-count">2</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#334155"></span><span class="legend-name">Concord Rooter and Plumbing</span><span class="legend-count">1</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#9ca3af"></span><span class="legend-name">Other (42 companies)</span><span class="legend-count">42</span></div>
         </div>
       </div>
       <p class="note">Top 10 companies by registrant count, everything else grouped into "Other".</p>
@@ -116,15 +116,16 @@
     <div class="chart-card">
       <div class="chart-card-title">User By Title</div>
       <div class="bar-chart">
-        <div class="bar-row"><div class="bar-label">Owner</div><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><div class="bar-value">16</div></div>
-        <div class="bar-row"><div class="bar-label">CEO</div><div class="bar-track"><div class="bar-fill" style="width:25%;"></div></div><div class="bar-value">4</div></div>
-        <div class="bar-row"><div class="bar-label">Manager</div><div class="bar-track"><div class="bar-fill" style="width:19%;"></div></div><div class="bar-value">3</div></div>
-        <div class="bar-row"><div class="bar-label">owner</div><div class="bar-track"><div class="bar-fill" style="width:13%;"></div></div><div class="bar-value">2</div></div>
-        <div class="bar-row"><div class="bar-label">President</div><div class="bar-track"><div class="bar-fill" style="width:13%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">Owner</div><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><div class="bar-value">17</div></div>
+        <div class="bar-row"><div class="bar-label">CEO</div><div class="bar-track"><div class="bar-fill" style="width:29%;"></div></div><div class="bar-value">5</div></div>
+        <div class="bar-row"><div class="bar-label">Manager</div><div class="bar-track"><div class="bar-fill" style="width:18%;"></div></div><div class="bar-value">3</div></div>
+        <div class="bar-row"><div class="bar-label">owner</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">President</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">2</div></div>
         <div class="bar-row"><div class="bar-label">Office Administrator</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Office</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Co-founder</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Managing Director</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Owner/CEO</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Sr. Marketing Manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Project manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">General Manager</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
@@ -153,13 +154,16 @@
         <div class="bar-row"><div class="bar-label">Operation Director</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Owner C EO</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Administration</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Technician</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="bar-value">1</div></div>
       </div>
     </div>
 
     <div class="chart-card">
-      <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">59 registered</div></div>
+      <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">63 registered</div></div>
       <div class="reg-list">
+        <div class="reg-row"><span class="reg-name">Adrian Saucedo</span><span class="reg-company">Heating &amp; Airflow, Inc.</span></div>
         <div class="reg-row"><span class="reg-name">Ajith Govind</span><span class="reg-company">Upfront Roofing</span></div>
+        <div class="reg-row"><span class="reg-name">Aleksandr Melnichuk</span><span class="reg-company">Smart4Smart</span></div>
         <div class="reg-row"><span class="reg-name">Aleksandr Rudchenko</span><span class="reg-company">Happy Homes Construction &amp; Remodeling Inc</span></div>
         <div class="reg-row"><span class="reg-name">Amir Compton</span><span class="reg-company">Adc Window Washers</span></div>
         <div class="reg-row"><span class="reg-name">Andrew Twidwell</span><span class="reg-company">ABT Plumbing, Electric, Heat &amp; Air</span></div>
@@ -179,6 +183,7 @@
         <div class="reg-row"><span class="reg-name">George Hotarek</span><span class="reg-company">Lutz Plumbing Inc.</span></div>
         <div class="reg-row"><span class="reg-name">George Moskoff</span><span class="reg-company">APG Electric Co.</span></div>
         <div class="reg-row"><span class="reg-name">Greg Bellows</span><span class="reg-company">G &amp; C HVAC Services LLC</span></div>
+        <div class="reg-row"><span class="reg-name">Grigory Dudorov</span><span class="reg-company">Smart4Smart</span></div>
         <div class="reg-row"><span class="reg-name">Jacqueline Farley</span><span class="reg-company">Concord Rooter and Plumbing</span></div>
         <div class="reg-row"><span class="reg-name">Jason Anderholm</span><span class="reg-company">Jason Anderholm</span></div>
         <div class="reg-row"><span class="reg-name">Jason Walker</span><span class="reg-company">Royalty Heating &amp; Air</span></div>
@@ -206,6 +211,7 @@
         <div class="reg-row"><span class="reg-name">Raushan Abdrakhmanov</span><span class="reg-company">Max electric</span></div>
         <div class="reg-row"><span class="reg-name">Reynaldo Medina</span><span class="reg-company">Century Service Pro Inc.</span></div>
         <div class="reg-row"><span class="reg-name">Ron Filson</span><span class="reg-company">Samwise Garden and Irrigation Design and Installation</span></div>
+        <div class="reg-row"><span class="reg-name">Ruan Figueiredo</span><span class="reg-company">Ducks Solutions</span></div>
         <div class="reg-row"><span class="reg-name">Serge Kalitov</span><span class="reg-company">Next HVAC</span></div>
         <div class="reg-row"><span class="reg-name">Serge Zhyhalau</span><span class="reg-company">ELC Contractor</span></div>
         <div class="reg-row"><span class="reg-name">Sergei Kalitov</span><span class="reg-company">NEXT HVAC</span></div>

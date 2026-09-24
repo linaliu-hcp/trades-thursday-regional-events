@@ -563,7 +563,6 @@ async function main() {
           <span class="status ${r.status.cls}"><i></i>${escapeHtml(r.status.label)}</span>
         </td>
         <td class="mono-cell">${escapeHtml(r.registered)}</td>
-        <td class="mono-cell">—</td>
         <td class="mono-cell">${escapeHtml(r.hcpNonHcp)}</td>
         <td><a class="analytics-btn" href="events/${r.id}.html">View analytics →</a></td>
       </tr>`).join("\n");
@@ -611,10 +610,10 @@ ${SHARED_STYLE_TOKENS}
     <div class="table-scroll">
       <table>
         <thead>
-          <tr><th>Event</th><th>Status</th><th>Registered</th><th>Verified</th><th>HCP / Non-HCP</th><th></th></tr>
+          <tr><th>Event</th><th>Status</th><th>Registered</th><th>HCP / Non-HCP</th><th></th></tr>
         </thead>
         <tbody>
-          ${tableRows || '<tr><td colspan="7">No upcoming Regional events right now — check back soon.</td></tr>'}
+          ${tableRows || '<tr><td colspan="5">No upcoming Regional events right now — check back soon.</td></tr>'}
         </tbody>
       </table>
     </div>

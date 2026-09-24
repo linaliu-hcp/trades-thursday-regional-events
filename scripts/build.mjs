@@ -183,12 +183,26 @@ async function fetchEventMembers(eventId, token) {
 // Only "Registered" rows count — same rule the private dashboard's
 // Audience Mix uses (see lib/data.ts's classifyAudience). Immediately
 // reduces to two counts; the emails themselves never leave this function.
+// Matches the private dashboard's plainAttendees rule exactly (see
+// fetchEventMemberData in that repo's lib/goldcast.ts) so the two counts
+// never drift apart: a non-zero Goldcast role (check-in staff, owner,
+// speaker, etc.) or an internal HCP staff email is excluded entirely,
+// not counted as either HCP or non-HCP.
+function isPlainAttendee(m) {
+  const roles = m.event_role_list ?? [];
+  return roles.length === 0 || roles.every((r) => r === 0);
+}
+function isInternalStaff(m) {
+  return /@housecallpro\.com$/i.test(m.user?.email ?? "");
+}
+
 function classifyAudienceMix(members, activeOrgEmails) {
   if (!activeOrgEmails) return { hcpCustomers: null, nonCustomers: null };
   let hcp = 0;
   let non = 0;
   for (const m of members) {
     if (m.status !== "Registered") continue;
+    if (!isPlainAttendee(m) || isInternalStaff(m)) continue;
     const email = m.user?.email?.trim().toLowerCase();
     if (!email) continue;
     if (activeOrgEmails.has(email)) hcp++;

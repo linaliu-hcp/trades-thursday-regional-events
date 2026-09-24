@@ -1,6 +1,6 @@
 // Builds docs/index.html — a public, read-only table of Trades Thursday
 // Regional events for pros, matching the internal dashboard's Regional
-// table layout (Event/Host, Status, Venue Type, Registered) — no login.
+// table layout (Event/Host, Status, Registered) — no login.
 // Also builds one docs/events/{id}.html per event: registrations,
 // companies, a companies-distribution chart, a user-by-title chart, and a
 // plain registrant list (first name + company only — see the privacy note
@@ -106,13 +106,6 @@ const CITY_STATE = {
   columbus: "OH",
 };
 
-const VENUE_TYPE_TAG_MAP = {
-  "4b2f31b0-d49a-40ca-931e-448c17fec4c7": "Bar",
-  "fd1e4f34-74c7-4cff-9343-eeee0f878ac7": "Restaurant",
-  "19ba251c-d1fb-417c-afae-7b61721b4488": "Catering",
-  "cbc128de-db3c-46f2-a175-badb9682d3f6": "Other",
-};
-
 // Donut/bar palette — matches the internal dashboard's --chart-1/--chart-2
 // pairing philosophy (distinct, non-brand hues) extended out to 10 slots
 // plus a neutral "Other" grey.
@@ -132,14 +125,6 @@ function cityFromDisplayName(displayName) {
   return { city, state: CITY_STATE[city.toLowerCase()] ?? "" };
 }
 
-function venueTypeFromTags(tags) {
-  if (!tags) return "";
-  for (const t of tags) {
-    if (VENUE_TYPE_TAG_MAP[t]) return VENUE_TYPE_TAG_MAP[t];
-  }
-  return "";
-}
-
 async function fetchAllPages(url, token) {
   const events = [];
   let next = url;
@@ -151,14 +136,6 @@ async function fetchAllPages(url, token) {
     next = data.next;
   }
   return events;
-}
-
-async function fetchEventDetail(id, token) {
-  const res = await fetch(`${GOLDCAST_BASE_URL}/event/${id}/`, {
-    headers: { Authorization: `Token ${token}` },
-  });
-  if (!res.ok) return null;
-  return res.json();
 }
 
 // Real endpoint, confirmed live 2026-09-17 (already used server-side by the
@@ -545,13 +522,10 @@ async function main() {
 
   const rows = [];
   for (const e of regional) {
-    const detail = await fetchEventDetail(e.id, goldcastToken);
-    const tags = detail?.tags ?? e.tags ?? null;
     const displayName = displayNameFromTitle(e.title);
     const { city, state } = cityFromDisplayName(displayName);
     const cityState = [city, state].filter(Boolean).join(", ") || displayName;
     const status = computeStatus(e.start_time, e.end_time);
-    const venueType = venueTypeFromTags(tags);
     const hostName = hostNamesByGcid.get(e.id) || "—";
 
     const members = await fetchEventMembers(e.id, goldcastToken);
@@ -569,7 +543,6 @@ async function main() {
       startTimeIso: e.start_time,
       hostName,
       status,
-      venueType,
       registered: e.registrant_count ?? analytics.registrationCount ?? 0,
       hcpNonHcp,
     };
@@ -589,7 +562,6 @@ async function main() {
         <td>
           <span class="status ${r.status.cls}"><i></i>${escapeHtml(r.status.label)}</span>
         </td>
-        <td>${escapeHtml(r.venueType || "—")}</td>
         <td class="mono-cell">${escapeHtml(r.registered)}</td>
         <td class="mono-cell">—</td>
         <td class="mono-cell">${escapeHtml(r.hcpNonHcp)}</td>
@@ -639,7 +611,7 @@ ${SHARED_STYLE_TOKENS}
     <div class="table-scroll">
       <table>
         <thead>
-          <tr><th>Event</th><th>Status</th><th>Venue Type</th><th>Registered</th><th>Verified</th><th>HCP / Non-HCP</th><th></th></tr>
+          <tr><th>Event</th><th>Status</th><th>Registered</th><th>Verified</th><th>HCP / Non-HCP</th><th></th></tr>
         </thead>
         <tbody>
           ${tableRows || '<tr><td colspan="7">No upcoming Regional events right now — check back soon.</td></tr>'}

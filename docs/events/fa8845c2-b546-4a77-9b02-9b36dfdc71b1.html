@@ -50,7 +50,7 @@
   .chart-card-title { font-size: 0.95rem; font-weight: 700; }
   .chart-card-count { font-size: 0.78rem; color: var(--ink-faint); }
   .donut-row { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
-  .donut { width: 200px; height: 200px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#003a6d 0% 4.3478260869565215%, #c2410c 4.3478260869565215% 6.521739130434782%, #1e40af 6.521739130434782% 8.695652173913043%, #be185d 8.695652173913043% 10.869565217391305%, #0891b2 10.869565217391305% 13.043478260869566%, #7c3aed 13.043478260869566% 15.217391304347828%, #b45309 15.217391304347828% 17.39130434782609%, #4d7c0f 17.39130434782609% 19.56521739130435%, #9d174d 19.56521739130435% 21.739130434782613%, #334155 21.739130434782613% 23.913043478260875%, #9ca3af 23.913043478260875% 100.00000000000001%); position: relative; }
+  .donut { width: 200px; height: 200px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(#003a6d 0% 4%, #c2410c 4% 6%, #1e40af 6% 8%, #be185d 8% 10%, #0891b2 10% 12%, #7c3aed 12% 14%, #b45309 14% 16%, #4d7c0f 16% 18%, #9d174d 18% 20%, #334155 20% 22%, #9ca3af 22% 100%); position: relative; }
   .donut::after { content: ""; position: absolute; inset: 32px; border-radius: 50%; background: var(--surface); }
   .legend { display: flex; flex-direction: column; gap: 9px; flex: 1; min-width: 220px; }
   .legend-row { display: flex; align-items: center; gap: 9px; font-size: 0.83rem; }
@@ -78,7 +78,7 @@
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         All Regional Events
       </a>
-      <div class="updated-tag">Last updated <span class="updated-time-auto" data-updated-iso="2026-09-28T11:47:11.273Z">Sep 28, 2026, 11:47 AM UTC</span></div>
+      <div class="updated-tag">Last updated <span class="updated-time-auto" data-updated-iso="2026-09-28T18:46:56.386Z">Sep 28, 2026, 6:46 PM UTC</span></div>
     </div>
 
     <div class="hdr">
@@ -87,8 +87,8 @@
     </div>
 
     <div class="stat-row">
-      <div class="stat-card"><div class="stat-label">Registrations</div><div class="stat-value">92</div></div>
-      <div class="stat-card"><div class="stat-label">Companies</div><div class="stat-value">78</div></div>
+      <div class="stat-card"><div class="stat-label">Registrations</div><div class="stat-value">100</div></div>
+      <div class="stat-card"><div class="stat-label">Companies</div><div class="stat-value">86</div></div>
     </div>
 
     
@@ -107,7 +107,7 @@
         <div class="legend-row"><span class="legend-dot" style="background:#4d7c0f"></span><span class="legend-name">Royalty Heating &amp; Air</span><span class="legend-count">2</span></div>
         <div class="legend-row"><span class="legend-dot" style="background:#9d174d"></span><span class="legend-name">Royalty Heating &amp; air</span><span class="legend-count">2</span></div>
         <div class="legend-row"><span class="legend-dot" style="background:#334155"></span><span class="legend-name">Smart4Smart</span><span class="legend-count">2</span></div>
-        <div class="legend-row"><span class="legend-dot" style="background:#9ca3af"></span><span class="legend-name">Other (68 companies)</span><span class="legend-count">70</span></div>
+        <div class="legend-row"><span class="legend-dot" style="background:#9ca3af"></span><span class="legend-name">Other (76 companies)</span><span class="legend-count">78</span></div>
         </div>
       </div>
       <p class="note">Top 10 companies by registrant count, everything else grouped into "Other".</p>
@@ -116,11 +116,13 @@
     <div class="chart-card">
       <div class="chart-card-title">User By Title</div>
       <div class="bar-chart">
-        <div class="bar-row"><div class="bar-label">Owner</div><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><div class="bar-value">24</div></div>
-        <div class="bar-row"><div class="bar-label">CEO</div><div class="bar-track"><div class="bar-fill" style="width:29%;"></div></div><div class="bar-value">7</div></div>
-        <div class="bar-row"><div class="bar-label">owner</div><div class="bar-track"><div class="bar-fill" style="width:21%;"></div></div><div class="bar-value">5</div></div>
-        <div class="bar-row"><div class="bar-label">President</div><div class="bar-track"><div class="bar-fill" style="width:17%;"></div></div><div class="bar-value">4</div></div>
-        <div class="bar-row"><div class="bar-label">Manager</div><div class="bar-track"><div class="bar-fill" style="width:13%;"></div></div><div class="bar-value">3</div></div>
+        <div class="bar-row"><div class="bar-label">Owner</div><div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div><div class="bar-value">26</div></div>
+        <div class="bar-row"><div class="bar-label">CEO</div><div class="bar-track"><div class="bar-fill" style="width:38%;"></div></div><div class="bar-value">10</div></div>
+        <div class="bar-row"><div class="bar-label">owner</div><div class="bar-track"><div class="bar-fill" style="width:19%;"></div></div><div class="bar-value">5</div></div>
+        <div class="bar-row"><div class="bar-label">President</div><div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div><div class="bar-value">4</div></div>
+        <div class="bar-row"><div class="bar-label">Manager</div><div class="bar-track"><div class="bar-fill" style="width:12%;"></div></div><div class="bar-value">3</div></div>
+        <div class="bar-row"><div class="bar-label">Operations Manager</div><div class="bar-track"><div class="bar-fill" style="width:8%;"></div></div><div class="bar-value">2</div></div>
+        <div class="bar-row"><div class="bar-label">CFO</div><div class="bar-track"><div class="bar-fill" style="width:8%;"></div></div><div class="bar-value">2</div></div>
         <div class="bar-row"><div class="bar-label">Office Administrator</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Office</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Co-founder</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
@@ -133,7 +135,6 @@
         <div class="bar-row"><div class="bar-label">Home service professionals</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Groundsman</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Stay At Home / Takes Care Of Children</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
-        <div class="bar-row"><div class="bar-label">Operations Manager</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Electrical Installer</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Co-Owner</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">IT</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
@@ -144,7 +145,6 @@
         <div class="bar-row"><div class="bar-label">Growth</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Cofounder &amp; CTO</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Sales</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
-        <div class="bar-row"><div class="bar-label">CFO</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">AD</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Owner/contractor</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Company Culture/HR</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
@@ -170,11 +170,12 @@
         <div class="bar-row"><div class="bar-label">Senior Project Manager</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Partner</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
         <div class="bar-row"><div class="bar-label">Founder</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
+        <div class="bar-row"><div class="bar-label">Dounder</div><div class="bar-track"><div class="bar-fill" style="width:4%;"></div></div><div class="bar-value">1</div></div>
       </div>
     </div>
 
     <div class="chart-card">
-      <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">92 registered</div></div>
+      <div class="chart-card-head"><div class="chart-card-title">Registrants</div><div class="chart-card-count">100 registered</div></div>
       <div class="reg-list">
         <div class="reg-row"><span class="reg-name">Abel Vieira</span><span class="reg-company">Comfy heating and air conditioning.</span></div>
         <div class="reg-row"><span class="reg-name">Adrian Saucedo</span><span class="reg-company">Heating &amp; Airflow, Inc.</span></div>
@@ -193,6 +194,7 @@
         <div class="reg-row"><span class="reg-name">Chappy Patrick Carver</span><span class="reg-company">Always Affordable Plumbing and HVAC</span></div>
         <div class="reg-row"><span class="reg-name">Chappy Patrick Carver</span><span class="reg-company">Always Affordable Plumbing and HVAC</span></div>
         <div class="reg-row"><span class="reg-name">Christopher Carias</span><span class="reg-company">Cactus</span></div>
+        <div class="reg-row"><span class="reg-name">Damon Hedgspeth</span><span class="reg-company">Cogent Board</span></div>
         <div class="reg-row"><span class="reg-name">Daniel Patashvili</span><span class="reg-company">Dwan Elevator Co.</span></div>
         <div class="reg-row"><span class="reg-name">Danny Fluellen</span><span class="reg-company">Harris line service</span></div>
         <div class="reg-row"><span class="reg-name">David Zamir</span><span class="reg-company">Nana</span></div>
@@ -202,15 +204,19 @@
         <div class="reg-row"><span class="reg-name">Devin Jackson</span><span class="reg-company">Flores Electric</span></div>
         <div class="reg-row"><span class="reg-name">Donnie Bryant</span><span class="reg-company">Kelly Plumbing &amp; Heating Inc</span></div>
         <div class="reg-row"><span class="reg-name">Eamon padhraic O’conduibh</span><span class="reg-company">EPC BUILT, INC.</span></div>
+        <div class="reg-row"><span class="reg-name">Edgar Perez</span><span class="reg-company">EGC FAMILY PLUMBING INC</span></div>
         <div class="reg-row"><span class="reg-name">Fernando Soto</span><span class="reg-company">360 Home services</span></div>
         <div class="reg-row"><span class="reg-name">Gabriela Moncada</span><span class="reg-company">Grizzly Bay Area</span></div>
         <div class="reg-row"><span class="reg-name">George Hotarek</span><span class="reg-company">Lutz Plumbing Inc.</span></div>
         <div class="reg-row"><span class="reg-name">George Moskoff</span><span class="reg-company">APG Electric Co.</span></div>
+        <div class="reg-row"><span class="reg-name">German Aquino</span><span class="reg-company">Ranchero plumbing</span></div>
         <div class="reg-row"><span class="reg-name">Greg Bellows</span><span class="reg-company">G &amp; C HVAC Services LLC</span></div>
         <div class="reg-row"><span class="reg-name">Grigory Dudorov</span><span class="reg-company">Smart4Smart</span></div>
+        <div class="reg-row"><span class="reg-name">Gustavo Ochoa</span><span class="reg-company">Reform Rennovation LLC</span></div>
         <div class="reg-row"><span class="reg-name">Henos Haile</span><span class="reg-company">Heavenly Heating and air</span></div>
         <div class="reg-row"><span class="reg-name">Henrry Mejia</span><span class="reg-company">Cedar Maintenance &amp; More</span></div>
         <div class="reg-row"><span class="reg-name">Jacqueline Farley</span><span class="reg-company">Concord Rooter and Plumbing</span></div>
+        <div class="reg-row"><span class="reg-name">Jacqueline Lewis</span><span class="reg-company">C Bates Electric</span></div>
         <div class="reg-row"><span class="reg-name">Jason Anderholm</span><span class="reg-company">Jason Anderholm</span></div>
         <div class="reg-row"><span class="reg-name">Jason Walker</span><span class="reg-company">Royalty Heating &amp; Air</span></div>
         <div class="reg-row"><span class="reg-name">Jason Walker</span><span class="reg-company">Royalty Heating &amp; air</span></div>
@@ -223,6 +229,7 @@
         <div class="reg-row"><span class="reg-name">Karmen Norris</span><span class="reg-company">Crewlift</span></div>
         <div class="reg-row"><span class="reg-name">Kevin Gingher</span><span class="reg-company">John Gleason Plumbing</span></div>
         <div class="reg-row"><span class="reg-name">Lauren Brand</span><span class="reg-company">Housecall Pro</span></div>
+        <div class="reg-row"><span class="reg-name">Louis Floyd</span><span class="reg-company">A1 On Track</span></div>
         <div class="reg-row"><span class="reg-name">Luke Otterstad</span><span class="reg-company">Brush Pros</span></div>
         <div class="reg-row"><span class="reg-name">Lyes Bouhazem</span><span class="reg-company">Velair heating &amp; cooling</span></div>
         <div class="reg-row"><span class="reg-name">Maksim Rashchepkin</span><span class="reg-company">Max electric LLC</span></div>
@@ -246,8 +253,10 @@
         <div class="reg-row"><span class="reg-name">Raushan Abdrakhmanov</span><span class="reg-company">Max electric</span></div>
         <div class="reg-row"><span class="reg-name">Rey Flores</span><span class="reg-company">Flores Electric</span></div>
         <div class="reg-row"><span class="reg-name">Reynaldo Medina</span><span class="reg-company">Century Service Pro Inc.</span></div>
+        <div class="reg-row"><span class="reg-name">Robert Youanis</span><span class="reg-company">The Remodel Crew</span></div>
         <div class="reg-row"><span class="reg-name">Ron Filson</span><span class="reg-company">Samwise Garden and Irrigation Design and Installation</span></div>
         <div class="reg-row"><span class="reg-name">Ruan Figueiredo</span><span class="reg-company">Ducks Solutions</span></div>
+        <div class="reg-row"><span class="reg-name">Sama Watson</span><span class="reg-company">C. Bates Electric</span></div>
         <div class="reg-row"><span class="reg-name">Sayed Hussain</span><span class="reg-company">Pacific Estate Construction Group Inc.</span></div>
         <div class="reg-row"><span class="reg-name">Senait Tadesse</span><span class="reg-company">Heavenly Heating &amp; Air</span></div>
         <div class="reg-row"><span class="reg-name">Serge Kalitov</span><span class="reg-company">Next HVAC</span></div>
